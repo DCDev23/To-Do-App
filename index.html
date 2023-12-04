@@ -1,0 +1,34 @@
+<!-- index.html -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Do App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>To Do App</h1>
+    <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+  </header>
+
+  <main>
+    <section>
+      <ul class="list" id="todo-list">
+        <!-- To Do items will be dynamically added here -->
+      </ul>
+      <form>
+        <label for="todo-input">Task</label>
+        <input type="text" id="todo-input" name="todo" placeholder="E.g. Finish homework">
+
+        <label for="due-date-input">Due Date</label>
+        <input type="date" id="due-date-input" name="dueDate">
+
+        <button type="button" onclick="addTodo()">Add</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="ToDoScript.js"></script>
+</body>
+</html>
