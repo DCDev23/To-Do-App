@@ -11,7 +11,7 @@ class ToDoItem extends HTMLElement {
     todoSpan.textContent = todoText;
 
     const dueDateSpan = document.createElement('span');
-    dueDateSpan.textContent = `Due: ${dueDate}`;
+    dueDateSpan.textContent = ` Due: ${dueDate}`;
     dueDateSpan.classList.add('due-date');
 
     const deleteButton = document.createElement('button');
