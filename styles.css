@@ -1,4 +1,4 @@
-/* Reset default margin and padding */
+
 html,
 body,
 header,
@@ -65,7 +65,7 @@ ul {
   list-style: none;
   padding: 0;
   margin-bottom: 20px;
-  /* background-color: #bebebe; */
+  font-weight: bold;
 }
 
 label {
