@@ -74,17 +74,6 @@ function loadTasks() {
   }
 }
 
-// Function to change screen orientation
-function changeScreenOrientation(orientation) {
-  screen.orientation.lock(orientation);
-}
 
-// Function to change screen aspect ratio
-function changeScreenAspectRatio(aspectRatio) {
-  document.documentElement.style.setProperty('--aspect-ratio', aspectRatio);
-}
 
-document.getElementById("portraitBtn").addEventListener("click", changeScreenOrientation("portrait-primary"));
-document.getElementById("landscapeBtn").addEventListener("click", changeScreenOrientation("landscape-primary"));
-document.getElementById("sixteenNineBtn").addEventListener("click", changeScreenAspectRatio("16/9"));
-document.getElementById("sixteenNineBtn").addEventListener("click", changeScreenAspectRatio("4/3"));
+

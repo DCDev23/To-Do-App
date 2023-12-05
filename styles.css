@@ -97,13 +97,3 @@ button:hover {
   color: #eee;
 }
 
-.footerButtons{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-
-.footerBtn{
-  margin-bottom:10px ;
-}
