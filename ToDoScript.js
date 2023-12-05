@@ -11,7 +11,7 @@ class ToDoItem extends HTMLElement {
     todoSpan.textContent = todoText;
 
     const dueDateSpan = document.createElement('span');
-    dueDateSpan.textContent = ` Due: ${dueDate}`;
+    dueDateSpan.textContent = `Due: ${dueDate}`;
     dueDateSpan.classList.add('due-date');
 
     const deleteButton = document.createElement('button');
@@ -22,9 +22,13 @@ class ToDoItem extends HTMLElement {
       this.saveTasks();
     });
 
+    const buttonContainer = document.createElement('div');
+    buttonContainer.classList.add('button-container');
+    buttonContainer.appendChild(dueDateSpan);
+    buttonContainer.appendChild(deleteButton);
+
     this.appendChild(todoSpan);
-    this.appendChild(dueDateSpan);
-    this.appendChild(deleteButton);
+    this.appendChild(buttonContainer);
 
     this.saveTasks();
   }
