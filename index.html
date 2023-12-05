@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To Do App</title>
   <link rel="stylesheet" href="styles.css">
-  <style>
-    /* Add any additional CSS styles here */
-  </style>
 </head>
 <body>
   <header>
@@ -32,8 +29,12 @@
     </section>
   </main>
 
-  
+  <!-- Dialog for displaying invalid due date message -->
+  <dialog id="invalidDateDialog">
+    <p>Please enter a due date from today onwards.</p>
+    <button id="closeDialogBtn">OK</button>
+  </dialog>
 
-  <script src="ToDoScript.js"></script>
+  <script src="ToDoScript.js" defer></script>
 </body>
 </html>

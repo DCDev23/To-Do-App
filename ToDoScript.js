@@ -1,79 +1,99 @@
-// Function to add a new task with due date to the list
-// Function to add a new task with due date to the list
+class ToDoItem extends HTMLElement {
+  connectedCallback() {
+    this.render();
+  }
+
+  render() {
+    const todoText = this.getAttribute('text');
+    const dueDate = this.getAttribute('due-date');
+
+    const todoSpan = document.createElement('span');
+    todoSpan.textContent = todoText;
+
+    const dueDateSpan = document.createElement('span');
+    dueDateSpan.textContent = `Due: ${dueDate}`;
+    dueDateSpan.classList.add('due-date');
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.classList.add('delete-btn');
+    deleteButton.addEventListener('click', () => {
+      this.remove();
+      this.saveTasks();
+    });
+
+    this.appendChild(todoSpan);
+    this.appendChild(dueDateSpan);
+    this.appendChild(deleteButton);
+
+    this.saveTasks();
+  }
+
+  saveTasks() {
+    const todoItems = document.querySelectorAll('to-do-item');
+    const tasks = [];
+    for (let i = 0; i < todoItems.length; i++) {
+      const item = todoItems[i];
+      tasks.push({
+        text: item.getAttribute('text'),
+        dueDate: item.getAttribute('due-date')
+      });
+    }
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
+
+  static loadTasks() {
+    const savedTasks = JSON.parse(localStorage.getItem('tasks'));
+
+    if (savedTasks) {
+      const todoList = document.getElementById('todo-list');
+      for (let i = 0; i < savedTasks.length; i++) {
+        const task = savedTasks[i];
+        const newItem = document.createElement('to-do-item');
+        newItem.setAttribute('text', task.text);
+        newItem.setAttribute('due-date', task.dueDate);
+        todoList.appendChild(newItem);
+      }
+    }
+  }
+}
+
+customElements.define('to-do-item', ToDoItem);
+
+document.addEventListener('DOMContentLoaded', () => {
+  ToDoItem.loadTasks(); // Load tasks from localStorage when the page loads
+  const closeDialogBtn = document.getElementById('closeDialogBtn');
+  const invalidDateDialog = document.getElementById('invalidDateDialog');
+  closeDialogBtn.addEventListener('click', () => {
+    invalidDateDialog.close();
+  });
+});
+
 function addTodo() {
   const todoInput = document.getElementById('todo-input');
   const dueDateInput = document.getElementById('due-date-input');
   const todoText = todoInput.value.trim();
-  const dueDate = dueDateInput.value.trim();
+  const dueDate = new Date(dueDateInput.valueAsDate); // Convert input to Date object
   
-  if (todoText !== '' && dueDate !== '') {
-    const currentDate = new Date(); // Get the current date
-    const selectedDate = new Date(dueDate); // Convert dueDate to a Date object
+  const currentDate = new Date(); // Get the current date
 
-    if (selectedDate >= currentDate) {
-      const todoList = document.getElementById('todo-list');
-      const listItem = document.createElement('li');
-      listItem.innerHTML = `
-        <span>${todoText}</span>
-        <span class="due-date">Due: ${dueDate}</span>
-        <button onclick="deleteTodo(this)">Delete</button>
-      `;
-      todoList.appendChild(listItem);
-      todoInput.value = '';
-      dueDateInput.value = '';
-      
-      saveTasks(); // Save tasks to localStorage
-    } else {
-      alert('Please select a due date on or after the present day!');
-    }
+  if (todoText !== '' && dueDate >= currentDate) {
+    const todoList = document.getElementById('todo-list');
+    const newItem = document.createElement('to-do-item');
+    newItem.setAttribute('text', todoText);
+    newItem.setAttribute('due-date', dueDate.toISOString().split('T')[0]); // Format date as yyyy-mm-dd
+    todoList.appendChild(newItem);
+    todoInput.value = '';
+    dueDateInput.value = '';
+  } else if (dueDate < currentDate) {
+    const invalidDateDialog = document.getElementById('invalidDateDialog');
+    invalidDateDialog.showModal();
   } else {
-    alert('Please enter a task and due date!');
+    // Handle other validation cases if needed
   }
 }
 
-
-// Function to delete a task from the list
-function deleteTodo(element) {
-  const listItem = element.parentElement;
-  listItem.remove();
-  
-  saveTasks(); // Save tasks to localStorage after deletion
-}
-
-// Function to toggle dark mode
 function toggleDarkMode() {
   const body = document.body;
   body.classList.toggle('dark-mode');
 }
-
-// Ensure dark mode persistence across page refreshes
-document.addEventListener('DOMContentLoaded', () => {
-  const body = document.body;
-  const isDarkMode = localStorage.getItem('darkMode') === 'true';
-
-  if (isDarkMode) {
-    body.classList.add('dark-mode');
-  }
-  
-  loadTasks(); // Load tasks from localStorage when the page loads
-});
-
-// Save tasks to localStorage
-function saveTasks() {
-  const todoList = document.getElementById('todo-list');
-  localStorage.setItem('tasks', todoList.innerHTML);
-}
-
-// Load tasks from localStorage
-function loadTasks() {
-  const savedTasks = localStorage.getItem('tasks');
-  const todoList = document.getElementById('todo-list');
-
-  if (savedTasks) {
-    todoList.innerHTML = savedTasks;
-  }
-}
-
-
-
-

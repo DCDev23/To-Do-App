@@ -65,6 +65,7 @@ ul {
   list-style: none;
   padding: 0;
   margin-bottom: 20px;
+  /* background-color: #bebebe; */
 }
 
 label {
@@ -95,5 +96,14 @@ button:hover {
 .dark-mode {
   background-color: #333;
   color: #eee;
+}
+
+to-do-item {
+  display: block;
+  margin-bottom: 10px; /* Add margin between each ToDo item */
+  padding: 10px;
+  background-color: #8e8e8e;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
